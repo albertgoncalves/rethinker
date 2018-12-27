@@ -9,10 +9,10 @@ posterior = function(p_grid, prior) {
 
 if (sys.nframe() == 0) {
     p_grid = seq(from =0, to=1, length.out=20)
-    priors = list( "rep(1, 20)"
-                 , "ifelse(p_grid < 0.5, 0, 1)"
-                 , "exp(-5 * abs(p_grid - 0.5))"
-                 )
+    priors = c( "rep(1, 20)"
+              , "ifelse(p_grid < 0.5, 0, 1)"
+              , "exp(-5 * abs(p_grid - 0.5))"
+              )
     for (prior in priors) {
         plot( p_grid
             , posterior(p_grid, eval(parse(text=prior)))
