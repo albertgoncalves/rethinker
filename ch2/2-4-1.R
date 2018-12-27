@@ -8,7 +8,8 @@ posterior = function(p_grid, prior) {
 }
 
 if (sys.nframe() == 0) {
-    p_grid = seq(from =0, to=1, length.out=20)
+    n = 20
+    p_grid = seq(from=0, to=1, length.out=n)
     priors = c( "rep(1, 20)"
               , "ifelse(p_grid < 0.5, 0, 1)"
               , "exp(-5 * abs(p_grid - 0.5))"
@@ -21,6 +22,6 @@ if (sys.nframe() == 0) {
             , ylab="posterior probability"
             )
         title(main=sprintf("prior = %s", prior))
-        mtext("20 points")
+        mtext(sprintf("%s points", n))
     }
 }
