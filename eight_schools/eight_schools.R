@@ -4,8 +4,6 @@
 
 library(rstan)
 
-source("../stan_utility.R")
-
 if (sys.nframe() == 0) {
     rstan_options(auto_write=TRUE)
     options(mc.cores=parallel::detectCores())
@@ -26,5 +24,4 @@ if (sys.nframe() == 0) {
               , control=list(adapt_delta=0.9)
               )
     print(fit)
-    check_all_diagnostics(fit)
 }
