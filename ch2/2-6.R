@@ -96,7 +96,6 @@ if (sys.nframe() == 0) {
                             , c(0, 1)
                             , c(1, 1)
                             ), n))
-
         }
 
         { # medium 7
@@ -111,18 +110,20 @@ if (sys.nframe() == 0) {
                 }
 
                 candidate = function(draw) {
-                    first_card = draw[[1]]
-                    second_card = draw[[2]]
-                    if ((first_card[[1]] == 1) & (second_card[[1]] == 0))
+                    one_side_black = draw[[1]][[1]] == 1
+                    one_side_white = draw[[2]][[1]] == 0
+
+                    if (one_side_black & one_side_white)
                         return(1)
                     else
                         return(0)
                 }
 
                 match = function(draw) {
-                    first_card = draw[[1]]
-                    second_card = draw[[2]]
-                    if (identical(first_card, c(1, 1)) & (second_card[[1]] == 0))
+                    both_sides_black = identical(draw[[1]], c(1, 1))
+                    one_side_white = draw[[2]][[1]] == 0
+
+                    if (both_sides_black & one_side_white)
                         return(1)
                     else
                         return(0)
