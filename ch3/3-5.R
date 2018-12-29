@@ -47,6 +47,7 @@ if (sys.nframe() == 0) {
                 print(mean(post_predictive_check == 6))
             }
         }
+
         { # medium 5
             n = 10000
             p_grid = seq(from=0, to=1, length.out=n)
@@ -74,6 +75,49 @@ if (sys.nframe() == 0) {
                 print(mean(post_predictive_check == s))
                 print(mean(rbinom(n, size=t, prob=0.7) == s))
             }
+        }
+    }
+
+    { # hard 1-5
+        data(homeworkch3)
+
+        n = 10000
+        p_grid = seq(from=0, to=1, length.out=n)
+        prior = rep(1, n)
+
+        total_boys = sum(birth1) + sum(birth2)
+        total_births = length(birth1) + length(birth2)
+
+        likelihood = dbinom(total_boys, size=total_births, prob=p_grid)
+        posterior = std_posterior(likelihood * prior)
+        samples = sample(p_grid, prob=posterior, size=n, replace=TRUE)
+
+        # hard 1
+        print(p_grid[which.max(posterior)])
+
+        # hard 2
+        print(HPDI(samples, 0.5))
+        print(HPDI(samples, 0.89))
+        print(HPDI(samples, 0.97))
+
+        { # hard 3
+            sims = rbinom(n, size=200, prob=samples)
+            dens(sims)
+            abline(v=total_boys)
+        }
+
+        { # hard 4
+            sims = rbinom(n, size=length(birth1), prob=samples)
+            dens(sims)
+            abline(v=sum(birth1))
+        }
+
+        { # hard 5
+            births_after_females = birth2[which(birth1 == 0)]
+
+            sims = rbinom(n, size=length(births_after_females), prob=samples)
+            dens(sims)
+            abline(v=sum(births_after_females))
         }
     }
 }
