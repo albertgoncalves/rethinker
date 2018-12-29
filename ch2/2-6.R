@@ -135,29 +135,27 @@ if (sys.nframe() == 0) {
         }
     }
 
-    { # hard 1-4
-        {
-            prior = c(1, 1)
-            likelihood = c(0.1, 0.2)
+    { # hard 1-3
+        prior = c(1, 1)
+        likelihood = c(0.1, 0.2)
 
-            # hard 1
-            print(sum(posterior(likelihood, prior) * likelihood))
+        # hard 1
+        print(sum(posterior(likelihood, prior) * likelihood))
 
-            # hard 2
-            print(posterior(likelihood, prior))
+        # hard 2
+        print(posterior(likelihood, prior))
 
-            # hard 3
-            print(posterior(1 - likelihood, posterior(likelihood, prior)))
-        }
+        # hard 3
+        print(posterior(1 - likelihood, posterior(likelihood, prior)))
+    }
 
-        { # hard 4
-            prior = c(1, 1)
-            orig_likelihood = c(0.1, 0.2)
-            vet_likelihood = c(0.8, 1 - 0.65)
-            update = posterior( 1 - orig_likelihood
-                              , posterior(orig_likelihood, prior)
-                              )
-            print(posterior(posterior(vet_likelihood, prior), update))
-        }
+    { # hard 4
+        prior = c(1, 1)
+        orig_likelihood = c(0.1, 0.2)
+        vet_likelihood = c(0.8, 1 - 0.65)
+        update = posterior( 1 - orig_likelihood
+                          , posterior(orig_likelihood, prior)
+                          )
+        print(posterior(posterior(vet_likelihood, prior), update))
     }
 }
