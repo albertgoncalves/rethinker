@@ -116,18 +116,7 @@ medium7 = function(n) {
     return(card_counter(n, cards, draw, partial, full))
 }
 
-if (sys.nframe() == 0) {
-    # easy1
-    # the probability of rain on Monday = Pr(rain|Monday)
-
-    # easy2
-    # Pr(Monday|rain) = probability of Monday given rain
-
-    # easy3
-    # the probability that it is Monday, given that it is raining =
-        # Pr(Monday|rain)
-        # (Pr(rain|Monday) * Pr(Monday)) / Pr(rain)
-
+medium = function() {
     for (ex in c(medium1, medium2)) {
         obs = c( "c(1, 1, 1)"
                , "c(1, 1, 1, 0)"
@@ -143,4 +132,37 @@ if (sys.nframe() == 0) {
     print(medium5(n))
     print(medium6(n))
     print(medium7(n))
+}
+
+hard = function() {
+    prior = c(1, 1)
+    likelihood = c(0.1, 0.2)
+
+    hard1 = sum(posterior(likelihood, prior) * likelihood)
+    hard2 = posterior(likelihood, prior)
+    hard3 = posterior(1 - likelihood, hard2)
+
+    vet_likelihood = c(0.8, 1 - 0.65)
+    hard4 = posterior(posterior(vet_likelihood, prior), hard3)
+
+    print(hard1)
+    print(hard2)
+    print(hard3)
+    print(hard4)
+}
+
+if (sys.nframe() == 0) {
+    # easy1
+    # the probability of rain on Monday = Pr(rain|Monday)
+
+    # easy2
+    # Pr(Monday|rain) = probability of Monday given rain
+
+    # easy3
+    # the probability that it is Monday, given that it is raining =
+        # Pr(Monday|rain)
+        # (Pr(rain|Monday) * Pr(Monday)) / Pr(rain)
+
+    medium()
+    hard()
 }
