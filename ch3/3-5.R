@@ -94,9 +94,7 @@ if (sys.nframe() == 0) {
         print(p_grid[which.max(posterior)])
 
         # hard 2
-        print(HPDI(samples, 0.5))
-        print(HPDI(samples, 0.89))
-        print(HPDI(samples, 0.97))
+        for (interval in c(0.5, 0.89, 0.97)) print(HPDI(samples, interval))
 
         { # hard 3
             sims = rbinom(n, size=200, prob=samples)
