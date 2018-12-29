@@ -40,17 +40,80 @@ medium3 = function() {
     return(posterior(likelihood, prior))
 }
 
-medium4 = function() {
-    cards = list(c(0, 0), c(0, 1), c(1, 1))
-    draw = function (cards) {
-        card = cards[[sample(1:length(cards), 1)]]
-        if (card[[2]] == 1)
+card_counter = function(n, cards, draw, partial, full) {
+    draws = lapply(rep(NA, n), function(x) return(draw(cards)))
+    partials = sapply(draws, function(x) return(partial(x)))
+    fulls = sapply(draws, function(x) return(full(x)))
+    return(sum(fulls) / sum(partials))
+}
+
+single_draw = function(cards, n) {
+    draw = function(cards) {
+        return(sample(cards[[sample(1:length(cards), 1)]]))
+    }
+
+    partial = function(card) {
+        if (card[[1]] == 1)
             return(1)
         else
             return(0)
     }
-    n = 50000
-    return(mean(sapply(rep(NA, n), function(x) return(draw(cards)))))
+
+    full = function(card) {
+        if (identical(card, c(1, 1)))
+            return(1)
+        else
+            return(0)
+    }
+
+    return(card_counter(n, cards, draw, partial, full))
+}
+
+medium4 = function(n) {
+    cards = list(c(0, 0), c(0, 1), c(1, 1))
+    return(single_draw(cards, n))
+}
+
+medium5 = function(n) {
+    cards = list(c(0, 0), c(0, 1), c(1, 1), c(1, 1))
+    return(single_draw(cards, n))
+}
+
+medium6 = function(n) {
+    cards = list(c(0, 0), c(0, 0), c(0, 0), c(0, 1), c(0, 1), c(1, 1))
+    return(single_draw(cards, n))
+}
+
+medium7 = function(n) {
+    draw = function(cards) {
+        l = length(cards)
+        i = sample(1:l, 1)
+        first_card = cards[[i]]
+        remaining_cards = cards[-i]
+        second_card = remaining_cards[[sample(1:(l - 1), 1)]]
+        return(list(sample(first_card), sample(second_card)))
+    }
+
+    partial = function(draw) {
+        first_card = draw[[1]]
+        second_card = draw[[2]]
+        if ((first_card[[1]] == 1) & (second_card[[1]] == 0))
+            return(1)
+        else
+            return(0)
+    }
+
+    full = function(draw) {
+        first_card = draw[[1]]
+        second_card = draw[[2]]
+        if (identical(first_card, c(1, 1)) & (second_card[[1]] == 0))
+            return(1)
+        else
+            return(0)
+    }
+
+    cards = list(c(0, 0), c(0, 1), c(1, 1))
+    return(card_counter(n, cards, draw, partial, full))
 }
 
 if (sys.nframe() == 0) {
@@ -72,6 +135,12 @@ if (sys.nframe() == 0) {
                )
         for (ob in obs) ex(ob)
     }
+
     print(medium3())
-    print(medium4())
+
+    n = 10000
+    print(medium4(n))
+    print(medium5(n))
+    print(medium6(n))
+    print(medium7(n))
 }
