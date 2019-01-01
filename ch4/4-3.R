@@ -25,8 +25,8 @@ if (sys.nframe() == 0) {
     }
 
     {
-        mu_list = seq(from=140, to=160, length.out=500)
-        sigma_list = seq(from=4, to=9, length.out=500)
+        mu_list = seq(from=153, to=156, length.out=500)
+        sigma_list = seq(from=6.75, to=8.75, length.out=500)
         post = expand.grid(mu=mu_list, sigma=sigma_list)
         post$LL = sapply(1:nrow(post), function(i) return(
             sum(dnorm( adults$height
