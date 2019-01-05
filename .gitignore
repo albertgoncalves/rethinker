@@ -4,7 +4,7 @@
 !ch3
 !ch4
 !src
-!tests
+!test
 !test_stan
 !*.R
 *.data.R
