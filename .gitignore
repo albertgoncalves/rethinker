@@ -1,0 +1,8 @@
+*
+!.gitignore
+!ch2
+!ch3
+!ch4
+!*.R
+!*.sh
+!*.nix
