@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../", getwd()))
+library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
 
 posterior_samples = function(p_grid, posterior, n) {
     samples = sample(p_grid, prob=posterior, size=n, replace=TRUE)

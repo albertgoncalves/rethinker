@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../", getwd()))
+library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
 
 add_norm = function(m, n) {
     obs = replicate(m, sum(runif(n, -1, 1)))

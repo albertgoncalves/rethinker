@@ -6,8 +6,6 @@ with pkgs; mkShell {
                     wget
                   ];
     shellHook = ''
-        set -e
-
         . /Users/albert/miniconda3/etc/profile.d/conda.sh
 
         strcd() { cd "$(dirname $1)"; }

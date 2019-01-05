@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../", getwd()))
+library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
 
 dummy_w = function(n, size) return(rbinom(n, size=size, prob=0.7))
 

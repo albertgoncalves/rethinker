@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../", getwd()))
+library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
 
 std_posterior = function(posterior) return(posterior / sum(posterior))
 

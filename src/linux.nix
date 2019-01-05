@@ -11,8 +11,6 @@ with pkgs; mkShell {
                     glibcLocales
                   ];
     shellHook = ''
-        set -e
-
         strcd() { cd "$(dirname $1)"; }
         withfzf() {
             local h
