@@ -22,7 +22,7 @@ with pkgs; mkShell {
         export -f withfzf
 
         cd src/
-        env="renv"
+        env="Rethinking"
         sh install_env.sh $env
         conda activate $env
         sh install_rethinking.sh
