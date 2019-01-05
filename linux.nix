@@ -11,6 +11,8 @@ with pkgs; mkShell {
                     glibcLocales
                   ];
     shellHook = ''
+        set -e
+
         strcd() { cd "$(dirname $1)"; }
         withfzf() {
             local h
@@ -22,7 +24,8 @@ with pkgs; mkShell {
 
         alias cdfzf="withfzf strcd"
         alias vimfzf="withfzf vim"
-
         export -f withfzf
+
+        sh install_rethinking.sh
     '';
 }
