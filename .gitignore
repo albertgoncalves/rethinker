@@ -3,8 +3,11 @@
 !ch2
 !ch3
 !ch4
+!src
+!tests
 !test_stan
 !*.R
 *.data.R
 !*.sh
 !*.nix
+!*.stan

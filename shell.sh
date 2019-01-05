@@ -5,7 +5,7 @@ set -e
 os=$(uname -s)
 
 if [ $os == "Darwin" ]; then
-    nix-shell darwin.nix
+    nix-shell src/darwin.nix
 else
-    nix-shell linux.nix
+    nix-shell src/linux.nix
 fi

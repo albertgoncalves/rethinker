@@ -1,14 +1,17 @@
 { pkgs ? import <nixpkgs> {} }:
 with pkgs; mkShell {
     name = "Rethinking";
-    buildInputs = [ jdk
+    buildInputs = [ R
+                    rPackages.rstan
+                    rPackages.ggplot2
+                    rPackages.mvtnorm
+                    rPackages.coda
+                    python36Packages.csvkit
                     fzf
-                    wget
+                    glibcLocales
                   ];
     shellHook = ''
         set -e
-
-        . /Users/albert/miniconda3/etc/profile.d/conda.sh
 
         strcd() { cd "$(dirname $1)"; }
         withfzf() {
@@ -23,10 +26,8 @@ with pkgs; mkShell {
         alias vimfzf="withfzf vim"
         export -f withfzf
 
-        env="renv"
-        sh install_env.sh $env
-        conda activate $env
-
+        cd src/
         sh install_rethinking.sh
+        cd ../
     '';
 }
