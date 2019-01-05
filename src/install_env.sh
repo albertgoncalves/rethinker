@@ -2,7 +2,7 @@
 
 env=$1
 
-. /Users/albert/miniconda3/etc/profile.d/conda.sh
+. ~/miniconda3/etc/profile.d/conda.sh
 
 conda env list | grep $env >/dev/null
 
