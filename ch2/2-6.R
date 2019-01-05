@@ -40,7 +40,8 @@ if (sys.nframe() == 0) {
         step_prior = function(p_grid) return(ifelse(p_grid < 0.5, 0, 1))
 
         for (prior in list(flat_prior, step_prior))
-            for (obs in observations) plot_posterior(prior, obs)
+            for (obs in observations)
+                plot_posterior(prior, obs)
     }
 
     { # medium 3

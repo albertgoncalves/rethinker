@@ -40,7 +40,8 @@ if (sys.nframe() == 0) {
             + dunif(post$sigma, sigma_lower, sigma_upper, TRUE)
         post$prob = exp(post$prod - max(post$prod))
 
-        for (f in c(contour_xyz, image_xyz)) f(post$mu, post$sigma, post$prob)
+        for (f in c(contour_xyz, image_xyz))
+            f(post$mu, post$sigma, post$prob)
 
         sample_rows = sample( 1:nrow(post)
                             , size=n
