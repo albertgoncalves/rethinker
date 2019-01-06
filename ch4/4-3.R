@@ -5,7 +5,7 @@ library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
 if (sys.nframe() == 0) {
     data(Howell1)
     adults = Howell1[which(Howell1$age >= 18), ]
-    print(str(adults))
+    str(adults)
     dens(adults$height)
 
     mu_mu = 178
