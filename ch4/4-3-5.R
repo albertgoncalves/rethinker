@@ -9,7 +9,7 @@ extract_samples = function(model, n) {
 
 if (sys.nframe() == 0) {
     data(Howell1)
-    adults = Howell1[Howell1$age >= 18, ]
+    adults = data.frame(Howell1[Howell1$age >= 18, ])
     str(adults)
 
     n = 10000
@@ -43,6 +43,7 @@ if (sys.nframe() == 0) {
 
         plot(post)
     }
+
     {
         model = map( alist( height ~ dnorm(mu, exp(log_sigma))
                           , mu ~ dnorm(178, 20)

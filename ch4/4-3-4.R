@@ -4,7 +4,7 @@ library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
 
 if (sys.nframe() == 0) {
     data(Howell1)
-    adults = Howell1[Howell1$age >= 18, ]
+    adults = data.frame(Howell1[Howell1$age >= 18, ])
     str(adults)
     data = sample(adults$height, size=20)
 
