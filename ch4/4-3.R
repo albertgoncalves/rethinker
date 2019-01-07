@@ -4,7 +4,7 @@ library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
 
 if (sys.nframe() == 0) {
     data(Howell1)
-    adults = Howell1[which(Howell1$age >= 18), ]
+    adults = Howell1[Howell1$age >= 18, ]
     str(adults)
     dens(adults$height)
 
@@ -27,14 +27,16 @@ if (sys.nframe() == 0) {
     {
         mu_list = seq(from=153, to=156, length.out=500)
         sigma_list = seq(from=6.75, to=8.75, length.out=500)
+
         post = expand.grid(mu=mu_list, sigma=sigma_list)
-        post$LL = sapply(1:nrow(post), function(i) return(
-            sum(dnorm( adults$height
-                     , mean=post$mu[i]
-                     , sd=post$sigma[i]
-                     , log=TRUE
-                     ))
-        ))
+        post$LL = vapply( 1:nrow(post)
+                        , function(i) return(sum(dnorm( adults$height
+                                                      , mean=post$mu[i]
+                                                      , sd=post$sigma[i]
+                                                      , log=TRUE
+                                                      )))
+                        , 0
+                        )
         post$prod = post$LL
             + dnorm(post$mu, mu_mu, mu_sigma, TRUE)
             + dunif(post$sigma, sigma_lower, sigma_upper, TRUE)

@@ -25,6 +25,6 @@ if (sys.nframe() == 0) {
 
     print(sum(posterior * abs(0.5 - p_grid)))
 
-    loss = sapply(p_grid, loss_f(posterior, p_grid))
+    loss = vapply(p_grid, loss_f(posterior, p_grid), 0)
     print(p_grid[which.min(loss)])
 }
