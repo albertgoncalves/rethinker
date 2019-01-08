@@ -27,5 +27,8 @@ with pkgs; mkShell {
         conda activate $env
         sh install_rethinking.sh
         cd ../
+
+        alias ls='ls --color=auto'
+        alias ll='ls -al'
     '';
 }

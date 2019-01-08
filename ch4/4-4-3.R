@@ -37,8 +37,7 @@ plot_samples = function(data, n_data, n_samples) {
 if (sys.nframe() == 0) {
     data(Howell1)
     adults = data.frame(Howell1[Howell1$age >= 18, ])
-    plot_samples(adults, 10, 20)
-    plot_samples(adults, 50, 20)
-    plot_samples(adults, 150, 20)
-    plot_samples(adults, 350, 20)
+
+    for (x in c(10, 50, 150, 350))
+        plot_samples(adults, x, 20)
 }
