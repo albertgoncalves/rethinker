@@ -22,6 +22,7 @@ with pkgs; mkShell {
 
         alias cdfzf="withfzf strcd"
         alias vimfzf="withfzf vim"
+        alias open=xdg-open
         export -f withfzf
 
         cd src/
