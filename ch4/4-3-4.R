@@ -14,14 +14,13 @@ if (sys.nframe() == 0) {
     sigma_list = seq(from=4, to=20, length.out=n_list)
 
     post = expand.grid(mu=mu_list, sigma=sigma_list)
-    post$LL = vapply( 1:nrow(post)
-                    , function(i) return(sum(dnorm( data
-                                                  , mean=post$mu[i]
-                                                  , sd=post$sigma[i]
-                                                  , log=TRUE
-                                                  )))
-                    , 0
-                    )
+
+    lambda = function(i) {
+        return(sum(dnorm(data, mean=post$mu[i], sd=post$sigma[i], log=TRUE)))
+    }
+
+    post$LL = vapply(1:nrow(post), lambda, 0)
+
     post$prod = post$LL
         + dnorm(post$mu, 178, 20, TRUE)
         + dunif(post$sigma, 0, 50, TRUE)

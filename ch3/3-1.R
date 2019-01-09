@@ -2,7 +2,9 @@
 
 library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
 
-std_posterior = function(posterior) return(posterior / sum(posterior))
+std_posterior = function(posterior) {
+    return(posterior / sum(posterior))
+}
 
 posterior = function(n, p_grid) {
     prior = rep(1, n)

@@ -4,8 +4,13 @@ library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
 
 source("3-1.R")
 
-loss_f = function(posterior, p_grid)
-    return(function(d) return(sum(posterior * abs(d - p_grid))))
+loss_f = function(posterior, p_grid) {
+    f = function(d) {
+        return(sum(posterior * abs(d - p_grid)))
+    }
+
+    return(f)
+}
 
 if (sys.nframe() == 0) {
     n = 25000

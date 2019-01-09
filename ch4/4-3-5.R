@@ -38,8 +38,9 @@ if (sys.nframe() == 0) {
                  , precis(post)
                  )
 
-        for (x in xs)
+        for (x in xs) {
             print(x)
+        }
 
         plot(post)
     }

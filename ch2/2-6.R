@@ -36,12 +36,19 @@ if (sys.nframe() == 0) {
                        , "c(0, 1, 1, 0, 1, 1, 1)"
                        )
 
-        flat_prior = function(p_grid) return(rep(1, length(p_grid)))
-        step_prior = function(p_grid) return(ifelse(p_grid < 0.5, 0, 1))
+        flat_prior = function(p_grid) {
+            return(rep(1, length(p_grid)))
+        }
 
-        for (prior in list(flat_prior, step_prior))
-            for (obs in observations)
+        step_prior = function(p_grid) {
+            return(ifelse(p_grid < 0.5, 0, 1))
+        }
+
+        for (prior in list(flat_prior, step_prior)) {
+            for (obs in observations) {
                 plot_posterior(prior, obs)
+            }
+        }
     }
 
     { # medium 3
@@ -66,17 +73,19 @@ if (sys.nframe() == 0) {
                 }
 
                 candidate = function(card) {
-                    if (card[[1]] == 1)
+                    if (card[[1]] == 1) {
                         return(1)
-                    else
+                    } else {
                         return(0)
+                    }
                 }
 
                 match = function(card) {
-                    if (identical(card, c(1, 1)))
+                    if (identical(card, c(1, 1))) {
                         return(1)
-                    else
+                    } else {
                         return(0)
+                    }
                 }
 
                 return(counter(n, cards, draw, candidate, match))
@@ -114,21 +123,24 @@ if (sys.nframe() == 0) {
                     one_side_black = draw[[1]][[1]] == 1
                     one_side_white = draw[[2]][[1]] == 0
 
-                    if (one_side_black & one_side_white)
+                    if (one_side_black & one_side_white) {
                         return(1)
-                    else
+                    } else {
                         return(0)
+                    }
                 }
 
                 match = function(draw) {
                     both_sides_black = identical(draw[[1]], c(1, 1))
                     one_side_white = draw[[2]][[1]] == 0
 
-                    if (both_sides_black & one_side_white)
+                    if (both_sides_black & one_side_white) {
                         return(1)
-                    else
+                    } else {
                         return(0)
+                    }
                 }
+
                 return(counter(n, cards, draw, candidate, match))
             }
 

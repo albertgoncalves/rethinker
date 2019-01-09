@@ -29,21 +29,26 @@ if (sys.nframe() == 0) {
         sigma_list = seq(from=6.75, to=8.75, length.out=500)
 
         post = expand.grid(mu=mu_list, sigma=sigma_list)
-        post$LL = vapply( 1:nrow(post)
-                        , function(i) return(sum(dnorm( adults$height
-                                                      , mean=post$mu[i]
-                                                      , sd=post$sigma[i]
-                                                      , log=TRUE
-                                                      )))
-                        , 0
-                        )
+
+
+        lambda = function(i) {
+            return(sum(dnorm( adults$height
+                            , mean=post$mu[i]
+                            , sd=post$sigma[i]
+                            , log=TRUE
+                            )))
+        }
+
+        post$LL = vapply(1:nrow(post), lambda, 0)
+
         post$prod = post$LL
             + dnorm(post$mu, mu_mu, mu_sigma, TRUE)
             + dunif(post$sigma, sigma_lower, sigma_upper, TRUE)
         post$prob = exp(post$prod - max(post$prod))
 
-        for (f in c(contour_xyz, image_xyz))
+        for (f in c(contour_xyz, image_xyz)) {
             f(post$mu, post$sigma, post$prob)
+        }
 
         sample_rows = sample( 1:nrow(post)
                             , size=n
@@ -60,9 +65,14 @@ if (sys.nframe() == 0) {
             , col=col.alpha(rangi2, 0.1)
             )
 
-        printHPDI = function(x) return(print(HPDI(x)))
-        for (s in list(sample_mu, sample_sigma))
-            for (f in list(dens, printHPDI))
+        printHPDI = function(x) {
+            return(print(HPDI(x)))
+        }
+
+        for (s in list(sample_mu, sample_sigma)) {
+            for (f in list(dens, printHPDI)) {
                 f(s)
+            }
+        }
     }
 }

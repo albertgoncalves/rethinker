@@ -30,14 +30,16 @@ plot_samples = function(data, n_data, n_samples) {
         )
     mtext(concat("n = ", n_data))
 
-    for (i in 1:n_samples)
+    for (i in 1:n_samples) {
         abline(a=post$a[i], b=post$b[i], col=col.alpha("black", 0.3))
+    }
 }
 
 if (sys.nframe() == 0) {
     data(Howell1)
     adults = data.frame(Howell1[Howell1$age >= 18, ])
 
-    for (x in c(10, 50, 150, 350))
+    for (x in c(10, 50, 150, 350)) {
         plot_samples(adults, x, 20)
+    }
 }

@@ -29,8 +29,9 @@ if (sys.nframe() == 0) {
                  , cov2cor(variance_matrix)
                  )
 
-        for (x in xs)
+        for (x in xs) {
             print(x)
+        }
     }
 
     {
