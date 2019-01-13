@@ -6,6 +6,7 @@ with pkgs; mkShell {
                     rPackages.ggplot2
                     rPackages.mvtnorm
                     rPackages.coda
+                    rPackages.lintr
                     python36Packages.csvkit
                     fzf
                     glibcLocales
@@ -28,5 +29,12 @@ with pkgs; mkShell {
         cd src/
         sh install_rethinking.sh
         cd ../
+
+        lintr() {
+            R -e "library(lintr); lint('$1')" | \
+                awk '/> /{ found=1 } { if (found) print }'
+        }
+
+        export -f lintr
     '';
 }

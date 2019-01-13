@@ -1,0 +1,20 @@
+linters: with_defaults( absolute_paths_linter
+                      , assignment_linter=NULL
+                      , closed_curly_linter(allow_single_line=FALSE)
+                      , commas_linter
+                      , commented_code_linter
+                      , infix_spaces_linter=NULL
+                      , line_length_linter(79L)
+                      , no_tab_linter
+                      , object_usage_linter
+                      , camel_case_linter=NULL
+                      , snake_case_linter=NULL
+                      , multiple_dots_linter
+                      , object_length_linter(20L)
+                      , open_curly_linter(allow_single_line=FALSE)
+                      , single_quotes_linter
+                      , spaces_inside_linter
+                      , spaces_left_parentheses_linter
+                      , trailing_blank_lines_linter
+                      , trailing_whitespace_linter
+                      )

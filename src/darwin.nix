@@ -30,5 +30,12 @@ with pkgs; mkShell {
 
         alias ls='ls --color=auto'
         alias ll='ls -al'
+
+        lintr() {
+            R -e "library(lintr); lint('$1')" | \
+                awk '/> /{ found=1 } { if (found) print }'
+        }
+
+        export -f lintr
     '';
 }

@@ -10,5 +10,5 @@ if (( ! $? == 0 )); then
     conda create \
         -n $env \
         -c r -c conda-forge \
-        r r-rstan r-coda r-loo r-mvtnorm
+        r r-rstan r-coda r-loo r-mvtnorm r-lintr
 fi
