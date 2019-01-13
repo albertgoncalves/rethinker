@@ -60,9 +60,9 @@ if (sys.nframe() == 0) {
 
     { # medium 4-7
         counter = function(n, cards, draw, candidate, match) {
-            draws = lapply(rep(NA, n), function(x) return(draw(cards)))
-            candidates = vapply(draws, function(x) return(candidate(x)), 0)
-            matches = vapply(draws, function(x) return(match(x)), 0)
+            draws = replicate(n, draw(cards), simplify=FALSE)
+            candidates = vapply(draws, candidate, 0)
+            matches = vapply(draws, match, 0)
             return(sum(matches) / sum(candidates))
         }
 
