@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
+source("../rethinking.R")
 
 if (sys.nframe() == 0) {
     options(mc.cores=parallel::detectCores())
