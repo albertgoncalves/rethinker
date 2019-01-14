@@ -22,6 +22,7 @@ with pkgs; mkShell {
         export -f withfzf
 
         cd src/
+        rethinking_path=$(pwd)
         env="Rethinking"
         sh install_env.sh $env
         conda activate $env
@@ -37,5 +38,6 @@ with pkgs; mkShell {
         }
 
         export -f lintr
+        export rethinking_path
     '';
 }

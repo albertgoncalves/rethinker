@@ -27,6 +27,7 @@ with pkgs; mkShell {
         export -f withfzf
 
         cd src/
+        rethinking_path=$(pwd)
         sh install_rethinking.sh
         cd ../
 
@@ -36,5 +37,6 @@ with pkgs; mkShell {
         }
 
         export -f lintr
+        export rethinking_path
     '';
 }

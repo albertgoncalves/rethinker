@@ -1,7 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
-
+source("../rethinking.R")
 source("2-4-1.R")
 
 if (sys.nframe() == 0) {
@@ -14,7 +13,9 @@ if (sys.nframe() == 0) {
         # Pr(Monday|rain)
         # (Pr(rain|Monday) * Pr(Monday)) / Pr(rain)
 
-    { # medium 1-2
+
+    # medium 1-2
+    local({
         plot_posterior = function(prior_f, obs) {
             n = 20
             p_grid = seq(from=0, to=1, length.out=n)
@@ -49,16 +50,20 @@ if (sys.nframe() == 0) {
                 plot_posterior(prior, obs)
             }
         }
-    }
+    })
 
-    { # medium 3
+    # medium 3
+    local({
         prior = c(0.3, 1.0)
         globe_odds = c(1, 1) # each globe equally likely to be tossed
         likelihood = sum(prior * globe_odds)
         print(posterior(likelihood, prior))
-    }
+    })
 
-    { # medium 4-7
+    # medium 4-7
+    local({
+        n = 10000
+
         counter = function(n, cards, draw, candidate, match) {
             draws = replicate(n, draw(cards), simplify=FALSE)
             candidates = vapply(draws, candidate, 0)
@@ -66,7 +71,8 @@ if (sys.nframe() == 0) {
             return(sum(matches) / sum(candidates))
         }
 
-        { # medium 4-6
+        # medium 4-6
+        local({
             draws = function(cards, n) {
                 draw = function(cards) {
                     return(sample(cards[[sample(1:length(cards), 1)]]))
@@ -91,7 +97,7 @@ if (sys.nframe() == 0) {
                 return(counter(n, cards, draw, candidate, match))
             }
 
-            n = 10000
+
             # medium 4
             print(draws(list(c(0, 0), c(0, 1), c(1, 1)), n))
 
@@ -99,16 +105,18 @@ if (sys.nframe() == 0) {
             print(draws(list(c(0, 0), c(0, 1), c(1, 1), c(1, 1)), n))
 
             # medium 6
-            print(draws(list( c(0, 0)
-                            , c(0, 0)
-                            , c(0, 0)
-                            , c(0, 1)
-                            , c(0, 1)
-                            , c(1, 1)
-                            ), n))
-        }
+            cards = list( c(0, 0)
+                        , c(0, 0)
+                        , c(0, 0)
+                        , c(0, 1)
+                        , c(0, 1)
+                        , c(1, 1)
+                        )
+            print(draws(cards, n))
+        })
 
-        { # medium 7
+        # medium 7
+        local({
             draws = function(cards, n) {
                 draw = function(cards) {
                     l = length(cards)
@@ -146,10 +154,11 @@ if (sys.nframe() == 0) {
 
             cards = list(c(0, 0), c(0, 1), c(1, 1))
             print(draws(cards, n))
-        }
-    }
+        })
+    })
 
-    { # hard 1-3
+    # hard 1-3
+    local({
         prior = c(1, 1)
         likelihood = c(0.1, 0.2)
 
@@ -161,9 +170,10 @@ if (sys.nframe() == 0) {
 
         # hard 3
         print(posterior(1 - likelihood, posterior(likelihood, prior)))
-    }
+    })
 
-    { # hard 4
+    # hard 4
+    local({
         prior = c(1, 1)
         orig_likelihood = c(0.1, 0.2)
         vet_likelihood = c(0.8, 1 - 0.65)
@@ -171,5 +181,5 @@ if (sys.nframe() == 0) {
                           , posterior(orig_likelihood, prior)
                           )
         print(posterior(posterior(vet_likelihood, prior), update))
-    }
+    })
 }

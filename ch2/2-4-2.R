@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
+source("../rethinking.R")
 
 if (sys.nframe() == 0) {
     xlab = "proportion water"
@@ -17,7 +17,7 @@ if (sys.nframe() == 0) {
                          )
                   , data=list(w=6)
                   )
-    cat(sprintf("\n%s\n", qa))
+    cat(sprintf("%s\n", qa))
     print(precis(globe.qa))
     curve(dnorm(x, 0.67, 0.16), lty=2, add=TRUE)
 

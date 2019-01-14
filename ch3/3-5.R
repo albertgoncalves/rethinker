@@ -1,13 +1,13 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
-
+source("../rethinking.R")
 source("3-1.R")
 
 if (sys.nframe() == 0) {
     set.seed(100)
 
-    { # easy 1-7
+    # easy 1-7
+    local({
         n = 1000
         p_grid = seq(from=0, to=1, length.out=n)
         prior = rep(1, n)
@@ -21,9 +21,10 @@ if (sys.nframe() == 0) {
         print(quantile(samples, c(0.2, 1 - 0.2)))
         print(HPDI(samples, prob=0.66))
         print(PI(samples, prob=0.66))
-    }
+    })
 
-    { # medium 1
+    # medium 1
+    local({
         n = 10000
         p_grid = seq(from=0, to=1, length.out=n)
         prior = rep(1, n)
@@ -34,20 +35,23 @@ if (sys.nframe() == 0) {
         samples = sample(p_grid, prob=posterior, size=n, replace=TRUE)
         print(HPDI(samples, prob=0.9))
 
-        { # medium 3
+        # medium 3
+        local({
             post_pred_check = rbinom(n, size=15, prob=samples)
             simplehist(post_pred_check)
             print(mean(post_pred_check == 8))
-        }
+        })
 
-        { # medium 4
+        # medium 4
+        local({
             post_pred_check = rbinom(n, size=9, prob=samples)
             simplehist(post_pred_check)
             print(mean(post_pred_check == 6))
-        }
-    }
+        })
+    })
 
-    { # medium 5
+    # medium 5
+    local({
         n = 10000
         p_grid = seq(from=0, to=1, length.out=n)
         prior = ifelse(p_grid < 0.5, 0, 1)
@@ -57,26 +61,27 @@ if (sys.nframe() == 0) {
 
         print(HPDI(samples, prob=0.9))
 
-        {
+        local({
             t = 15
             s = 8
             post_pred_check = rbinom(n, size=t, prob=samples)
             simplehist(post_pred_check)
             print(mean(post_pred_check == s))
             print(mean(rbinom(n, size=t, prob=0.7) == s))
-        }
+        })
 
-        {
+        local({
             t = 9
             s = 6
             post_pred_check = rbinom(n, size=t, prob=samples)
             simplehist(post_pred_check)
             print(mean(post_pred_check == s))
             print(mean(rbinom(n, size=t, prob=0.7) == s))
-        }
-    }
+        })
+    })
 
-    { # hard 1-5
+    # hard 1-5
+    local({
         data(homeworkch3)
 
         n = 10000
@@ -98,24 +103,27 @@ if (sys.nframe() == 0) {
             print(HPDI(samples, interval))
         }
 
-        { # hard 3
+        # hard 3
+        local({
             sims = rbinom(n, size=200, prob=samples)
             dens(sims)
             abline(v=total_boys)
-        }
+        })
 
-        { # hard 4
+        # hard 4
+        local({
             sims = rbinom(n, size=length(birth1), prob=samples)
             dens(sims)
             abline(v=sum(birth1))
-        }
+        })
 
-        { # hard 5
+        # hard 5
+        local({
             births_after_females = birth2[which(birth1 == 0)]
 
             sims = rbinom(n, size=length(births_after_females), prob=samples)
             dens(sims)
             abline(v=sum(births_after_females))
-        }
-    }
+        })
+    })
 }

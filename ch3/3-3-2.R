@@ -1,7 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
-
+source("../rethinking.R")
 source("3-1.R")
 
 samples = function(n) {
