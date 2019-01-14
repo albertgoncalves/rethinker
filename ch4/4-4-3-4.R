@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 
 # link() by hand
 link_simple = function(model_function, param_seq) {

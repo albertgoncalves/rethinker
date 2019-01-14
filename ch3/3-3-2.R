@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 source("3-1.R")
 
 samples = function(n) {

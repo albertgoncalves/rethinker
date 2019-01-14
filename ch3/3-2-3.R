@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 source("3-1.R")
 
 loss_f = function(posterior, p_grid) {

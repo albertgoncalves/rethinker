@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 
 posterior_samples = function(p_grid, posterior, n) {
     samples = sample(p_grid, prob=posterior, size=n, replace=TRUE)

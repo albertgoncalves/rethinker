@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 
 plot_samples = function(data, n_data, n_samples) {
     data = data.frame(data[1:n_data, ])

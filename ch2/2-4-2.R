@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 
 if (sys.nframe() == 0) {
     xlab = "proportion water"

@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 
 add_norm = function(m, n) {
     obs = replicate(m, sum(runif(n, -1, 1)))

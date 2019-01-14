@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 source("2-4-1.R")
 
 if (sys.nframe() == 0) {

@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 library(MASS)
-source("../rethinking.R")
+source("../src/rethinking.R")
 
 extract_samples = function(model, n) {
     return(data.frame(mvrnorm(n=n, mu=coef(model), Sigma=vcov(model))))

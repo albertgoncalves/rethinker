@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 
 dummy_w = function(n, size) {
     return(rbinom(n, size=size, prob=0.7))

@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 
 std_posterior = function(posterior) {
     return(posterior / sum(posterior))
