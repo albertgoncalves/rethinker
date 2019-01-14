@@ -5,8 +5,6 @@ source("../rethinking.R")
 plot_samples = function(data, n_data, n_samples) {
     data = data.frame(data[1:n_data, ])
 
-    height = data$height
-    weight = data$weight
     flist = alist( height ~ dnorm(mu, sigma)
                  , mu <- alpha + (beta * weight)
                  , alpha ~ dnorm(178, 100)
@@ -20,10 +18,10 @@ plot_samples = function(data, n_data, n_samples) {
     model = map(flist, data=data, start=start)
     post = extract.samples(model, n=n_samples)
 
-    plot( weight
-        , height
-        , xlim=range(weight)
-        , ylim=range(height)
+    plot( data$weight
+        , data$weight
+        , xlim=range(data$weight)
+        , ylim=range(data$height)
         , col="blue"
         , xlab="weight"
         , ylab="height"
