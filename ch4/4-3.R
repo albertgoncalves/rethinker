@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
+source("../rethinking.R")
 
 if (sys.nframe() == 0) {
     data(Howell1)
@@ -14,7 +14,7 @@ if (sys.nframe() == 0) {
     sigma_upper = 50
     n = 10000
 
-    {
+    local({
         curve(dnorm(x, mu_mu, mu_sigma), from=100, to=250)
         curve(dunif(x, sigma_lower, sigma_upper), from=-10, to=60)
 
@@ -22,9 +22,9 @@ if (sys.nframe() == 0) {
         sigma = runif(n, sigma_lower, sigma_upper)
         prior = rnorm(n, mu, sigma)
         dens(prior)
-    }
+    })
 
-    {
+    local({
         mu_list = seq(from=153, to=156, length.out=500)
         sigma_list = seq(from=6.75, to=8.75, length.out=500)
 
@@ -74,5 +74,5 @@ if (sys.nframe() == 0) {
                 f(s)
             }
         }
-    }
+    })
 }

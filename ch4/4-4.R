@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
+source("../rethinking.R")
 
 if (sys.nframe() == 0) {
     data(Howell1)
@@ -12,7 +12,7 @@ if (sys.nframe() == 0) {
     # beta ~ Normal(0, 10) -> prior
     # sigma ~ Uniform(0, 50) -> prior
 
-    {
+    local({
         flist = alist( height ~ dnorm(mu, sigma)
                      , mu <- alpha + (beta * weight)
                      , alpha ~ dnorm(178, 100)
@@ -32,12 +32,12 @@ if (sys.nframe() == 0) {
         for (x in xs) {
             print(x)
         }
-    }
+    })
 
-    {
+    local({
         weight = adults$weight
         weight_mean = mean(weight)
-        weight_center = weight - weight_mean
+        weight_center <<- weight - weight_mean # alist needs global assignment
         flist = alist( height ~ dnorm(mu, sigma)
                      , mu <- alpha + (beta * weight_center)
                      , alpha ~ dnorm(178, 100)
@@ -60,5 +60,5 @@ if (sys.nframe() == 0) {
 
         post = extract.samples(model)
         print(head(post))
-    }
+    })
 }

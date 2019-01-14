@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 library(MASS)
-library(rethinking, lib.loc=sprintf("%s/../src/", getwd()))
+source("../rethinking.R")
 
 extract_samples = function(model, n) {
     return(data.frame(mvrnorm(n=n, mu=coef(model), Sigma=vcov(model))))
@@ -14,7 +14,7 @@ if (sys.nframe() == 0) {
 
     n = 10000
 
-    {
+    local({
         # h(index i) ~ Normal(mu, sigma) -> height ~ dnorm(mu, sigma)
         # mu ~ Normal(178, 20) -> mu ~ dnorm(178, 20)
         # sigma ~ Normal(0, 50) -> mu ~ dunif(0, 50)
@@ -43,9 +43,9 @@ if (sys.nframe() == 0) {
         }
 
         plot(post)
-    }
+    })
 
-    {
+    local({
         model = map( alist( height ~ dnorm(mu, exp(log_sigma))
                           , mu ~ dnorm(178, 20)
                           , log_sigma ~ dnorm(2, 10)
@@ -56,5 +56,5 @@ if (sys.nframe() == 0) {
         sigma = exp(post$log_sigma)
         print(head(sigma))
         plot(post)
-    }
+    })
 }
