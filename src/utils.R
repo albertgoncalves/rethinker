@@ -17,8 +17,19 @@ transparent = function(color, alpha) {
     return(adjustcolor(color, alpha.f=alpha))
 }
 
-color_ramp = function(colors, n) {
-    return(colorRampPalette(colors)(n))
+normalize = function(x, ...) {
+    return((x - min(x, ...)) / (max(x, ...) - min(x, ...)))
+}
+
+lrgb = function(list_rgb, max=255) {
+    r = list_rgb[[1]]
+    g = list_rgb[[2]]
+    b = list_rgb[[3]]
+    return(rgb(r, g, b, maxColorValue=max))
+}
+
+color_ramp = function(colors, z) {
+    return(sapply(lapply(normalize(z), colorRamp(plot_colors)), lrgb))
 }
 
 if (sys.nframe() == 0) {
@@ -26,13 +37,13 @@ if (sys.nframe() == 0) {
         return(rnorm(n, 0, 10))
     }
 
-    n = 5000
+    n = 2500
     x = rn(n)
     y = rn(n)
-    z = order(x)
-    plot_colors = color_ramp(c("lightsalmon2", "dodgerblue1"), n)
-    shade_color = transparent("mediumvioletred", 0.15)
 
-    plot(x[z], y[z], col=plot_colors)
+    plot_colors = c("lightsalmon2", "dodgerblue1", "green")
+    shade_color = transparent("mediumvioletred", 0.05)
+
+    plot(x, y, col=color_ramp(colors, x))
     shade(x, y, col=shade_color)
 }
