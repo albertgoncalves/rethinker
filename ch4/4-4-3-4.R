@@ -7,6 +7,10 @@ link_simple = function(model_function, param_seq) {
     return(sapply(param_seq, model_function))
 }
 
+# slight modification to rethinking::shade()
+# to inspect original:
+    # source("../rethinking.R")
+    # print(shade)
 shade = function( object, lim, label=NULL, col=col.alpha("black", 0.15)
                 , border=NA, ...) {
     if (missing(lim)) {
