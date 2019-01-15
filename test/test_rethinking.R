@@ -1,19 +1,19 @@
 #!/usr/bin/env Rscript
 
-source("../rethinking.R")
+source("../src/rethinking.R")
 
 if (sys.nframe() == 0) {
     options(mc.cores=parallel::detectCores())
 
     data(chimpanzees)
     d = chimpanzees
-    dat = list( y=d$pulled_left
+    data = list( y=d$pulled_left
                , prosoc=d$prosoc_left
                , condition=d$condition
                , N=nrow(d)
                )
 
-    m1s_code = "
+    model_code = "
        data {
            int<lower=1> N;
            int y[N];
@@ -41,7 +41,7 @@ if (sys.nframe() == 0) {
        }
     "
 
-    m1s = stan(model_code=m1s_code, data=dat, chains=2, iter=2000)
-    WAIC(m1s)
-    LOO(m1s)
+    model = stan(model_code=model_code, data=data, chains=2, iter=2000)
+    WAIC(model)
+    LOO(model)
 }

@@ -7,8 +7,10 @@
 !src
 !test
 !test_stan
+!test_workflow
 !*.R
 *.data.R
 !*.sh
 !*.nix
 !*.stan
+example.stan
