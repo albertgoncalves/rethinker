@@ -22,7 +22,7 @@ if (sys.nframe() == 0) {
 
     mu = link(model, data=data.frame(weight=weight_seq))
     mu_mean = apply(mu, 2, mean)
-    mu_HPDI= apply(mu, 2, HPDI, prob=0.89)
+    mu_HPDI = apply(mu, 2, HPDI, prob=0.89)
 
     sim_height = sim(model, data=list(weight=weight_seq), n=2500)
     str(sim_height)
