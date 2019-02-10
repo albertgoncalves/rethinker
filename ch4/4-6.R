@@ -9,9 +9,9 @@ if (sys.nframe() == 0) {
                      , mu = dnorm(0, 10)
                      , sigma = dunif(0, 10)
                      )
-        data = NULL
-        if (length(data) > 0) {
-            model = map(flist, data=data)
+        d = NULL
+        if (length(d) > 0) {
+            model = map(flist, data=d)
         }
     })
 
@@ -26,8 +26,8 @@ if (sys.nframe() == 0) {
 
     # hard 1
     local({
-        data = data.frame(Howell1)
-        print(summary(data))
+        d = data.frame(Howell1)
+        print(summary(d))
 
         flist = alist( height ~ dnorm(mu, sigma)
                      , mu <- alpha + (beta * weight)
@@ -35,11 +35,11 @@ if (sys.nframe() == 0) {
                      , beta ~ dnorm(0, 10)
                      , sigma ~ dunif(0, 50)
                      )
-        start = list( alpha=mean(data$height)
+        start = list( alpha=mean(d$height)
                     , beta=0
-                    , sigma=sd(data$height)
+                    , sigma=sd(d$height)
                     )
-        model = map(flist, data=data, start=start)
+        model = map(flist, data=d, start=start)
 
         weight_seq = c(46.95, 43.72, 64.78, 32.59, 54.63)
 
@@ -57,8 +57,8 @@ if (sys.nframe() == 0) {
 
     # hard 2
     local({
-        data = data.frame(Howell1[Howell1$age < 18, ])
-        print(summary(data))
+        d = data.frame(Howell1[Howell1$age < 18, ])
+        print(summary(d))
 
         flist = alist( height ~ dnorm(mu, sigma)
                      , mu <- alpha + (beta * weight)
@@ -66,24 +66,24 @@ if (sys.nframe() == 0) {
                      , beta ~ dnorm(0, 10)
                      , sigma ~ dunif(0, 50)
                      )
-        start = list( alpha=mean(data$height)
+        start = list( alpha=mean(d$height)
                     , beta=0
-                    , sigma=sd(data$height)
+                    , sigma=sd(d$height)
                     )
-        model = map(flist, data=data, start=start)
+        model = map(flist, data=d, start=start)
 
         weight_seq = seq(from=0, to=70, by=1)
 
         mu = link(model, data=data.frame(weight=weight_seq))
         mu_mean = apply(mu, 2, mean)
 
-        plot(height ~ weight, data, col=col.alpha(rangi2, 0.5))
+        plot(height ~ weight, d, col=col.alpha(rangi2, 0.5))
         lines(weight_seq, mu_mean)
     })
 
     # hard 3
     local({
-        data = data.frame(Howell1[Howell1$age < 18, ])
+        d = data.frame(Howell1[Howell1$age < 18, ])
 
         flist = alist( height ~ dnorm(mu, sigma)
                      , mu <- alpha + (beta * log(weight))
@@ -91,11 +91,11 @@ if (sys.nframe() == 0) {
                      , beta ~ dnorm(0, 100)
                      , sigma ~ dunif(0, 50)
                      )
-        start = list( alpha=mean(data$height)
+        start = list( alpha=mean(d$height)
                     , beta=0
-                    , sigma=sd(data$height)
+                    , sigma=sd(d$height)
                     )
-        model = map(flist, data=data, start=start)
+        model = map(flist, data=d, start=start)
 
         weight_seq = seq(from=0, to=70, by=1)
 
@@ -104,11 +104,10 @@ if (sys.nframe() == 0) {
         mu_HPDI = apply(mu, 2, HPDI, prob=0.89)
 
         sim_height = sim(model, data=list(weight=weight_seq), n=2500)
-        str(sim_height)
 
         height_PI = apply(sim_height, 2, PI, prob=0.89)
 
-        plot(height ~ weight, data, col=col.alpha(rangi2, 0.5))
+        plot(height ~ weight, d, col=col.alpha(rangi2, 0.5))
         lines(weight_seq, mu_mean)
         shade(mu_HPDI, weight_seq)
         shade(height_PI, weight_seq)
