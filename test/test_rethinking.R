@@ -4,7 +4,6 @@ source("../src/rethinking.R")
 
 if (sys.nframe() == 0) {
     options(mc.cores=parallel::detectCores())
-
     data(chimpanzees)
     d = chimpanzees
     data = list( y=d$pulled_left
@@ -12,7 +11,6 @@ if (sys.nframe() == 0) {
                , condition=d$condition
                , N=nrow(d)
                )
-
     model_code = "
        data {
            int<lower=1> N;
@@ -40,7 +38,6 @@ if (sys.nframe() == 0) {
            }
        }
     "
-
     model = stan(model_code=model_code, data=data, chains=2, iter=2000)
     WAIC(model)
     LOO(model)

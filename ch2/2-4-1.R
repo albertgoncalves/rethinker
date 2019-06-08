@@ -14,7 +14,6 @@ if (sys.nframe() == 0) {
               , "ifelse(p_grid < 0.5, 0, 1)"
               , "exp(-5 * abs(p_grid - 0.5))"
               )
-
     for (prior in priors) {
         plot( p_grid
             , posterior(likelihood, eval(parse(text=prior)))

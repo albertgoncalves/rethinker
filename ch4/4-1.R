@@ -18,11 +18,9 @@ log_norm = function(m, n) {
 
 if (sys.nframe() == 0) {
     m = 10000
-
     for (n in c(4, 8, 16)) {
         add_norm(m, n)
     }
-
     for (f in c(multi_norm, log_norm)) {
         for (n in c(0.1, 5)) {
             dens(f(m, n), norm.comp=TRUE)

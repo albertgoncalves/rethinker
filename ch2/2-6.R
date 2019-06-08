@@ -6,14 +6,10 @@ source("2-4-1.R")
 if (sys.nframe() == 0) {
     # easy 1-3
     # the probability of rain on Monday = Pr(rain|Monday)
-
     # Pr(Monday|rain) = probability of Monday given rain
-
     # the probability that it is Monday, given that it is raining =
         # Pr(Monday|rain)
         # (Pr(rain|Monday) * Pr(Monday)) / Pr(rain)
-
-
     # medium 1-2
     local({
         plot_posterior = function(prior_f, obs) {
@@ -22,7 +18,6 @@ if (sys.nframe() == 0) {
             prior = prior_f(p_grid)
             x = eval(parse(text=obs))
             likelihood = dbinom(sum(x), size=length(x), prob=p_grid)
-
             plot( p_grid
                 , posterior(likelihood, prior)
                 , type="b"
@@ -31,27 +26,22 @@ if (sys.nframe() == 0) {
                 )
             title(main=sprintf("obs = %s", obs))
         }
-
         observations= c( "c(1, 1, 1)"
                        , "c(1, 1, 1, 0)"
                        , "c(0, 1, 1, 0, 1, 1, 1)"
                        )
-
         flat_prior = function(p_grid) {
             return(rep(1, length(p_grid)))
         }
-
         step_prior = function(p_grid) {
             return(ifelse(p_grid < 0.5, 0, 1))
         }
-
         for (prior in list(flat_prior, step_prior)) {
             for (obs in observations) {
                 plot_posterior(prior, obs)
             }
         }
     })
-
     # medium 3
     local({
         prior = c(0.3, 1.0)
@@ -59,25 +49,21 @@ if (sys.nframe() == 0) {
         likelihood = sum(prior * globe_odds)
         print(posterior(likelihood, prior))
     })
-
     # medium 4-7
     local({
         n = 10000
-
         counter = function(n, cards, draw, candidate, match) {
             draws = replicate(n, draw(cards), simplify=FALSE)
             candidates = vapply(draws, candidate, 0)
             matches = vapply(draws, match, 0)
             return(sum(matches) / sum(candidates))
         }
-
         # medium 4-6
         local({
             draws = function(cards, n) {
                 draw = function(cards) {
                     return(sample(cards[[sample(1:length(cards), 1)]]))
                 }
-
                 candidate = function(card) {
                     if (card[[1]] == 1) {
                         return(1)
@@ -85,7 +71,6 @@ if (sys.nframe() == 0) {
                         return(0)
                     }
                 }
-
                 match = function(card) {
                     if (identical(card, c(1, 1))) {
                         return(1)
@@ -93,17 +78,12 @@ if (sys.nframe() == 0) {
                         return(0)
                     }
                 }
-
                 return(counter(n, cards, draw, candidate, match))
             }
-
-
             # medium 4
             print(draws(list(c(0, 0), c(0, 1), c(1, 1)), n))
-
             # medium 5
             print(draws(list(c(0, 0), c(0, 1), c(1, 1), c(1, 1)), n))
-
             # medium 6
             cards = list( c(0, 0)
                         , c(0, 0)
@@ -114,7 +94,6 @@ if (sys.nframe() == 0) {
                         )
             print(draws(cards, n))
         })
-
         # medium 7
         local({
             draws = function(cards, n) {
@@ -126,52 +105,41 @@ if (sys.nframe() == 0) {
                     second_card = remaining_cards[[sample(1:(l - 1), 1)]]
                     return(list(sample(first_card), sample(second_card)))
                 }
-
                 candidate = function(draw) {
                     one_side_black = draw[[1]][[1]] == 1
                     one_side_white = draw[[2]][[1]] == 0
-
                     if (one_side_black & one_side_white) {
                         return(1)
                     } else {
                         return(0)
                     }
                 }
-
                 match = function(draw) {
                     both_sides_black = identical(draw[[1]], c(1, 1))
                     one_side_white = draw[[2]][[1]] == 0
-
                     if (both_sides_black & one_side_white) {
                         return(1)
                     } else {
                         return(0)
                     }
                 }
-
                 return(counter(n, cards, draw, candidate, match))
             }
-
             cards = list(c(0, 0), c(0, 1), c(1, 1))
             print(draws(cards, n))
         })
     })
-
     # hard 1-3
     local({
         prior = c(1, 1)
         likelihood = c(0.1, 0.2)
-
         # hard 1
         print(sum(posterior(likelihood, prior) * likelihood))
-
         # hard 2
         print(posterior(likelihood, prior))
-
         # hard 3
         print(posterior(1 - likelihood, posterior(likelihood, prior)))
     })
-
     # hard 4
     local({
         prior = c(1, 1)
